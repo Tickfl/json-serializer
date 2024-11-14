@@ -8,13 +8,10 @@ import (
 	"json-serializer/proto/writers"
 )
 
-type ProtobufWriter struct {
-	Output io.Writer
-	Data   []models.JsonData
-}
+type ProtobufWriter struct{}
 
-func (c *ProtobufWriter) Write() error {
-	for _, item := range c.Data {
+func (c *ProtobufWriter) Write(Output io.Writer, Data []models.JsonData) error {
+	for _, item := range Data {
 		protoItem := &writers.JsonData{
 			Id:        item.Id,
 			Latitude:  item.Latitude,
@@ -31,7 +28,7 @@ func (c *ProtobufWriter) Write() error {
 			return fmt.Errorf("error marshal protobuf: %w", err)
 		}
 
-		if _, err := c.Output.Write(data); err != nil {
+		if _, err := Output.Write(data); err != nil {
 			return fmt.Errorf("error write protobuf: %w", err)
 		}
 	}

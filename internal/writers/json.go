@@ -6,14 +6,11 @@ import (
 	"json-serializer/internal/models"
 )
 
-type JsonWriter struct {
-	Output io.Writer
-	Data   []models.JsonData
-}
+type JsonWriter struct{}
 
-func (c *JsonWriter) Write() error {
-	encoder := json.NewEncoder(c.Output)
+func (c *JsonWriter) Write(Output io.Writer, Data []models.JsonData) error {
+	encoder := json.NewEncoder(Output)
 	encoder.SetIndent("", "  ")
 
-	return encoder.Encode(c.Data)
+	return encoder.Encode(Data)
 }

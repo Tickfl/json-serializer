@@ -6,14 +6,11 @@ import (
 	"json-serializer/internal/models"
 )
 
-type YamlWriter struct {
-	Output io.Writer
-	Data   []models.JsonData
-}
+type YamlWriter struct{}
 
-func (c *YamlWriter) Write() error {
-	encoder := yaml.NewEncoder(c.Output)
+func (c *YamlWriter) Write(Output io.Writer, Data []models.JsonData) error {
+	encoder := yaml.NewEncoder(Output)
 	defer encoder.Close()
 
-	return encoder.Encode(c.Data)
+	return encoder.Encode(Data)
 }

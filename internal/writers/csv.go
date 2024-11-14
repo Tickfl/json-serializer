@@ -7,16 +7,13 @@ import (
 	"json-serializer/internal/models"
 )
 
-type CsvWriter struct {
-	Output io.Writer
-	Data   []models.JsonData
-}
+type CsvWriter struct{}
 
-func (c *CsvWriter) Write() error {
-	writer := csv.NewWriter(c.Output)
+func (c *CsvWriter) Write(Output io.Writer, Data []models.JsonData) error {
+	writer := csv.NewWriter(Output)
 	defer writer.Flush()
 
-	for _, object := range c.Data {
+	for _, object := range Data {
 		row := []string{
 			object.Id,
 			fmt.Sprintf("%f", object.Latitude),
